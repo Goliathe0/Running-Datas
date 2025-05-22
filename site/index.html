@@ -2,12 +2,63 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Mes Activités</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Activités sportives</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Mes Activités Sportives</h1>
-    <div id="liste-activites"></div>
+    <h1>Mes Activités</h1>
+    <table id="activity-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Distance (km)</th>
+          <th>Dénivelé (m)</th>
+          <th>Durée</th>
+          <th>BPM</th>
+          <th>Vitesse/Allure</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <!-- Boutons déroulants -->
+    <div class="filters">
+      <select id="activity-type">
+        <option value="all">Toutes</option>
+        <option value="Running">Course à pied</option>
+        <option value="Cycling">Vélo</option>
+      </select>
+
+      <select id="period">
+        <option value="all">All Time</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <!-- Ajoutez d'autres années selon vos besoins -->
+      </select>
+    </div>
+
+    <!-- Tableau des statistiques -->
+    <table id="statistics-table">
+      <tbody>
+        <tr>
+          <td>Activités</td>
+          <td id="activity-count">Nombre d'activités</td>
+        </tr>
+        <tr>
+          <td>Distance</td>
+          <td id="total-distance">Distance totale</td>
+        </tr>
+        <tr>
+          <td>Dénivelé</td>
+          <td id="total-elevation">Dénivelé total</td>
+        </tr>
+        <tr>
+          <td>Temps</td>
+          <td id="total-time">Temps total</td>
+        </tr>
+      </tbody>
+    </table>
+
     <script src="script.js"></script>
   </body>
 </html>
