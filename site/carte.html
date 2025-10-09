@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carte des Activités</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        font-family: Arial, sans-serif;
+      }
+      #sidebar {
+        width: 250px;
+        background-color: #f0f0f0;
+        padding: 10px;
+        overflow-y: auto;
+        height: 100vh;
+      }
+      #map-container {
+        flex: 1;
+        height: 100vh;
+        position: relative;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+      .activity-item {
+        padding: 8px;
+        margin: 5px 0;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+      }
+      .activity-checkbox {
+        margin-right: 10px;
+      }
+      #toggle-all {
+        padding: 8px;
+        margin-bottom: 10px;
+        background-color: #ddd;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+      }
+      #toggle-all:hover {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="sidebar">
+      <h2>Activités</h2>
+      <button id="toggle-all">Tout sélectionner/déselectionner</button>
+      <div id="activity-list"></div>
+    </div>
+    <div id="map-container">
+      <div id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+      // Initialiser la carte Leaflet et la centrer sur une vue initiale
+      const map = L.map("map").setView([48.8566, 2.3522], 6);
+
+      // Ajouter une couche de tuiles OpenStreetMap à la carte
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Dictionnaire pour stocker les polylignes des activités
+      const activityLayers = {};
+      let activities = [];
+      let allActivities = [];
+
+      // Fonction pour normaliser le format de start_time
+      function normalizeStartTime(startTime) {
+        // Vérifier si startTime est déjà un objet Date
+        if (startTime instanceof Date) {
+          return startTime;
+        }
+
+        // Vérifier si startTime est une chaîne de caractères
+        if (typeof startTime === "string") {
+          // Supprimer les millisecondes si elles sont présentes
+          const normalizedTime = startTime.replace(/\.\d{3}Z$/, "Z");
+          return new Date(normalizedTime);
+        }
+
+        // Retourner une date par défaut si le format n'est pas reconnu
+        return new Date();
+      }
+
+      // Fonction asynchrone pour charger et afficher les activités
+      async function loadActivities() {
+        try {
+          // Charger la liste des fichiers d'activités depuis 'index.json'
+          const response = await fetch("activities_json/index.json");
+          const fileList = await response.json();
+          console.log("Fichiers d'activités chargés:", fileList);
+
+          // Charger et afficher chaque activité
+          for (const file of fileList) {
+            try {
+              const activityResponse = await fetch(`activities_json/${file}`);
+              const activity = await activityResponse.json();
+              allActivities.push(activity);
+              displayActivityOnMap(activity);
+              addActivityToList(activity, file);
+            } catch (error) {
+              console.error(
+                "Erreur lors du chargement de l'activité:",
+                file,
+                error
+              );
+            }
+          }
+
+          // Initialiser le bouton "Tout sélectionner/déselectionner" après le chargement des activités
+          initToggleAllButton();
+        } catch (error) {
+          console.error("Erreur lors du chargement des activités:", error);
+        }
+      }
+
+      // Fonction pour afficher une activité sur la carte sous forme de polyligne
+      function displayActivityOnMap(activity) {
+        if (!activity.laps || activity.laps.length === 0) {
+          console.error("Aucun lap trouvé pour l'activité:", activity);
+          return;
+        }
+
+        const latlngs = activity.laps.flatMap((lap) =>
+          lap.points
+            ? lap.points.map((point) => [point.latitude, point.longitude])
+            : []
+        );
+
+        if (latlngs.length === 0) {
+          console.error("Aucun point trouvé pour l'activité:", activity);
+          return;
+        }
+
+        // Déterminer la couleur de la polyligne en fonction du type d'activité
+        let color;
+        if (activity.sport === "Running") {
+          color = "blue"; // Bleu pour la course à pied
+        } else if (activity.sport === "Cycling") {
+          color = "#FF5733"; // Rouge pour le vélo
+        } else if (activity.sport === "Hiking") {
+          color = "green"; // Vert pour la randonnée
+        } else {
+          color = "gray"; // Couleur par défaut pour les autres types
+        }
+
+        // Créer une polyligne pour l'activité et l'ajouter à la carte
+        const polyline = L.polyline(latlngs, { color: color }).addTo(map);
+
+        // Stocker la polyligne dans le dictionnaire avec l'ID de l'activité comme clé
+        activityLayers[activity.id] = polyline;
+      }
+
+      // Fonction pour ajouter une activité à la liste dans la sidebar
+      function addActivityToList(activity, file) {
+        if (
+          !activity.laps ||
+          activity.laps.length === 0 ||
+          !activity.laps[0].start_time
+        ) {
+          console.error("Données manquantes pour l'activité:", file);
+          return;
+        }
+
+        const activityList = document.getElementById("activity-list");
+        const activityItem = document.createElement("div");
+        activityItem.className = "activity-item";
+
+        // Créer une case à cocher
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.className = "activity-checkbox";
+        checkbox.checked = true;
+        checkbox.dataset.activityId = activity.id;
+
+        // Ajouter un gestionnaire d'événement pour la case à cocher
+        checkbox.onchange = function () {
+          if (this.checked) {
+            map.addLayer(activityLayers[activity.id]);
+          } else {
+            map.removeLayer(activityLayers[activity.id]);
+          }
+        };
+
+        // Ajouter la case à cocher à l'élément de la liste
+        activityItem.appendChild(checkbox);
+
+        // Définir le texte de l'élément de la liste
+        const label = document.createElement("span");
+        const startTime = normalizeStartTime(activity.laps[0].start_time);
+        label.textContent = `${
+          activity.sport
+        } - ${startTime.toLocaleDateString()}`;
+        activityItem.appendChild(label);
+
+        // Ajouter un gestionnaire d'événement pour le clic sur l'élément de la liste
+        activityItem.onclick = function (event) {
+          // Empêcher le déclenchement de l'événement de la case à cocher lorsque l'on clique sur le texte
+          if (event.target !== checkbox) {
+            map.fitBounds(activityLayers[activity.id].getBounds());
+          }
+        };
+
+        // Ajouter l'élément à la liste des activités
+        activityList.appendChild(activityItem);
+      }
+
+      // Fonction pour initialiser le bouton "Tout sélectionner/déselectionner"
+      function initToggleAllButton() {
+        const toggleAllButton = document.getElementById("toggle-all");
+        toggleAllButton.onclick = function () {
+          const checkboxes = document.querySelectorAll(".activity-checkbox");
+          const allChecked = Array.from(checkboxes).every(
+            (checkbox) => checkbox.checked
+          );
+
+          checkboxes.forEach((checkbox) => {
+            checkbox.checked = !allChecked;
+            const activityId = checkbox.dataset.activityId;
+            if (checkbox.checked) {
+              map.addLayer(activityLayers[activityId]);
+            } else {
+              map.removeLayer(activityLayers[activityId]);
+            }
+          });
+        };
+      }
+
+      // Charger les activités
+      loadActivities();
+    </script>
+  </body>
+</html>

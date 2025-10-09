@@ -15,12 +15,13 @@
           <th>Distance (km)</th>
           <th>Dénivelé (m)</th>
           <th>Durée</th>
-          <th>BPM</th>
+          <th>BPM (moy / max)</th>
           <th>Vitesse/Allure</th>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
+
     <!-- Boutons déroulants -->
     <div class="filters">
       <select id="activity-type">
@@ -59,6 +60,58 @@
       </tbody>
     </table>
 
+    <!-- Onglets pour les records -->
+    <div class="tabs">
+      <button class="tab-button" onclick="openTab(event, 'Running')">
+        Course à pied
+      </button>
+      <button class="tab-button" onclick="openTab(event, 'Cycling')">
+        Cyclisme
+      </button>
+      <button class="tab-button" onclick="openTab(event, 'Swimming')">
+        Natation
+      </button>
+    </div>
+
+    <!-- Tableaux des records -->
+    <div id="Running" class="tab-content">
+      <table id="running-records-table">
+        <thead>
+          <tr>
+            <th>Distance</th>
+            <th>Record</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="Cycling" class="tab-content">
+      <table id="cycling-records-table">
+        <thead>
+          <tr>
+            <th>Distance</th>
+            <th>Record</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="Swimming" class="tab-content">
+      <table id="swimming-records-table">
+        <thead>
+          <tr>
+            <th>Distance</th>
+            <th>Record</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Inclure les fichiers JavaScript -->
+    <script src="fonctions.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
