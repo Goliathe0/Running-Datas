@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Activités sportives</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Charger Chart.js depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>Mes Activités</h1>
+    <div class="tabs">
+      <button class="tab-button" onclick="openTab(event, 'Running')">
+        Course à pied
+      </button>
+      <button class="tab-button" onclick="openTab(event, 'Cycling')">
+        Cyclisme
+      </button>
+      <button class="tab-button" onclick="openTab(event, 'Swimming')">
+        Natation
+      </button>
+    </div>
+    <canvas id="monAltitude" width="400" height="200"></canvas>
+    <canvas id="maVitesse" width="400" height="200"></canvas>
+    <div class="chart-controls">
+      <button class="chart-button" onclick="toggleDataset('maVitesse', 2)">
+        Altitude
+      </button>
+      <button class="chart-button" onclick="toggleDataset('maVitesse', 1)">
+        Allure/Vitesse
+      </button>
+      <button class="chart-button" onclick="openTab(event, 'Running')">
+        Allure moyenne du circuit
+      </button>
+
+      <button class="chart-button" onclick="toggleDataset('vitesseChart', 0)">
+        Fréquence cardiaque
+      </button>
+      <button class="chart-button" onclick="openTab(event, 'Swimming')">
+        Puissance
+      </button>
+      <button class="chart-button" onclick="openTab(event, 'Running')">
+        Cadence
+      </button>
+      <button class="chart-button" onclick="openTab(event, 'Running')">
+        longueur foulée
+      </button>
+      <button class="chart-button" onclick="openTab(event, 'Running')">
+        oscillation verticale
+      </button>
+    </div>
+
+    //Ajouter tableau circuits; temps;distance;allure moyenne
+
+    <!-- Tes autres scripts (si nécessaire) -->
+    <script src="fonctions.js"></script>
+    <script src="fillTable.js"></script>
+    <script>
+      // Récupère le nom du fichier sélectionné
+      const selectedFile = localStorage.getItem("selectedActivityFile");
+      console.log(
+        "localstorage :",
+        localStorage.getItem("selectedActivityFile")
+      );
+      if (selectedFile) {
+        console.log("Fichier sélectionné :", selectedFile);
+        // Utilise ce fichier pour mettre à jour les graphiques
+
+        fillAltitudeChart(selectedFile);
+        fillSpeedHrChart(selectedFile);
+      } else {
+        console.warn("Aucun fichier sélectionné.");
+      }
+    </script>
+  </body>
+</html>

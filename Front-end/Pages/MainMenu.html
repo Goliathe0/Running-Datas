@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Activités sportives</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Charger Chart.js depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Roll</h1>
+      <nav>
+        <a href="#">Mur des records</a>
+        <a href="#">Statistiques avancées</a>
+        <a href="#">Carte</a>
+      </nav>
+    </header>
+    <section>
+      Ajouter des transitions ou des animations, 1. J'aimerais ajouter des
+      bouttons et des actions assciées : 2.si c'est l'allure inverser y: //dans
+      le scatter chart tracer un courbe
+    </section>
+    <div style="width: 50%; margin: 0 auto">
+      <!-- 50% de la largeur de la fenêtre -->
+      <canvas id="monFromage" width="100" height="50"></canvas>
+    </div>
+    <table id="activity-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Distance (km)</th>
+          <th>Dénivelé (m)</th>
+          <th>Durée</th>
+          <th>BPM (moy / max)</th>
+          <th>Vitesse/Allure</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Le JavaScript remplira ici -->
+      </tbody>
+    </table>
+    <div class="dropdown">
+      <button class="dropbtn">Type d'activité</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="filterTable('All')">Tous</a>
+        <a href="#" onclick="filterTable('Running')">Course à pied</a>
+        <a href="#" onclick="filterTable('Biking')">Cyclisme</a>
+        <a href="#" onclick="filterTable('Swimming')">Natation</a>
+      </div>
+    </div>
+
+    <canvas id="monNuage" width="400" height="200"></canvas>
+    <!-- Inclure les fichiers JavaScript -->
+    <script src="fonctions.js"></script>
+    <script src="fillTable.js"></script>
+    <script>
+      fillTable();
+      fillScatterChart();
+    </script>
+  </body>
+</html>
