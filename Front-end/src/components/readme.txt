@@ -22,3 +22,6 @@ components/
   ├── MapView/
   │   ├── index.jsx
   │   └── mapUtils.js
+
+
+ajouter les variables de couleurs pour les appeler dans tout le projet ?

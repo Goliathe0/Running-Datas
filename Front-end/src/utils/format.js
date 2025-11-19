@@ -60,3 +60,42 @@ function formatDateISOtoFR(isoDate) {
   const year = date.getFullYear(); // Année sur 4 chiffres
   return `${day}/${month}/${year}`;
 }
+/*
+function getWeekNumber(dateString) {
+  const date = new Date(dateString);
+  // Clone la date pour éviter de modifier l'original
+  const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+  // Calcul du premier jeudi de l'année (pour la norme ISO)
+  const pastThursday =
+    firstDayOfYear.getDay() <= 4
+      ? firstDayOfYear
+      : new Date(date.getFullYear(), 0, 1 + (7 - firstDayOfYear.getDay() + 4));
+
+  // Calcul du numéro de semaine
+  const weekNumber = Math.ceil(((date - pastThursday) / 86400000 + 1) / 7);
+  return weekNumber;
+}*/
+
+function getWeekNumber(dateInput) {
+  // Si dateInput est déjà un objet Date, on le clone pour éviter toute modification
+  const date =
+    dateInput instanceof Date ? new Date(dateInput) : new Date(dateInput);
+
+  // Vérifie si la date est valide
+  if (isNaN(date.getTime())) {
+    return NaN; // ou une erreur, selon ce que tu préfères
+  }
+
+  // Trouver le premier jeudi de l'année (norme ISO)
+  const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+  const dayOfWeek = firstDayOfYear.getDay();
+  const firstThursday = new Date(
+    date.getFullYear(),
+    0,
+    1 + (dayOfWeek <= 4 ? 4 - dayOfWeek : 11 - dayOfWeek)
+  );
+
+  // Calculer le numéro de semaine
+  const weekNumber = 1 + Math.round((date - firstThursday) / 86400000 / 7);
+  return weekNumber;
+}

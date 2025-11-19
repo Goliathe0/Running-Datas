@@ -10,6 +10,7 @@ h1 {
   color: #333;
 }
 
+#laps-table,
 #activity-table,
 #statistics-table,
 #running-records-table,
@@ -20,6 +21,8 @@ h1 {
   margin-top: 20px;
 }
 
+#laps-table th,
+#laps-table td,
 #activity-table th,
 #activity-table td,
 #statistics-table th,
@@ -35,6 +38,7 @@ h1 {
   text-align: left;
 }
 
+#laps-table th,
 #activity-table th,
 #statistics-table th,
 #running-records-table th,
@@ -44,7 +48,8 @@ h1 {
   font-weight: bold;
 }
 
-#activity-table tr:nth-child(even),
+#laps-table,
+tr:nth-child(even) #activity-table tr:nth-child(even),
 #statistics-table tr:nth-child(even),
 #running-records-table tr:nth-child(even),
 #cycling-records-table tr:nth-child(even),
@@ -52,6 +57,7 @@ h1 {
   background-color: #f9f9f9;
 }
 
+#laps-table tr:hover,
 #activity-table tr:hover,
 #statistics-table tr:hover,
 #running-records-table tr:hover,
@@ -121,3 +127,35 @@ h1 {
   z-index: 1001;
 }
 
+.chart-button,
+.filter-btn {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin: 3px;
+}
+
+.chart-button:hover,
+.filter-btn:hover {
+  background: #eaeaea;
+}
+
+.chart-button.active,
+.filter-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+#map-container {
+  width: 100%;
+  height: 400px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}

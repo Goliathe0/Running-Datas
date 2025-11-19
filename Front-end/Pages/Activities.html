@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Activités</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Charger Chart.js depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Activités</h1>
+      <nav>
+        <button class="btn-mainMenu">Main menu</button>
+        <button class="btn-records">Mur des records</button>
+        <button class="btn-stats">Statistiques avancées</button>
+      </nav>
+    </header>
+    <section>ici tu peux mettre les prochaines tâches à réaliser :</section>
+    <div style="width: 50%; margin: 0 auto">
+      <!-- 50% de la largeur de la fenêtre -->
+      <canvas id="monFromage" width="100" height="50"></canvas>
+    </div>
+    <table id="activity-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Distance (km)</th>
+          <th>Dénivelé (m)</th>
+          <th>Durée</th>
+          <th>BPM (moy / max)</th>
+          <th>Vitesse/Allure</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Le JavaScript remplira ici -->
+      </tbody>
+    </table>
+    <div class="dropdown">
+      <button class="dropbtn">Type d'activité</button>
+      <div class="dropdown-content">
+        <a href="#" onclick="filterTable('All')">Tous</a>
+        <a href="#" onclick="filterTable('Running')">Course à pied</a>
+        <a href="#" onclick="filterTable('Biking')">Cyclisme</a>
+        <a href="#" onclick="filterTable('Swimming')">Natation</a>
+      </div>
+    </div>
+
+    <!-- scripts dans cet ordre -->
+    <script src="../src/utils/format.js"></script>
+    <script src="../src/utils/fillTable.js"></script>
+    <script src="../src/pages/Activities.js"></script>
+    <script src="../src/utils/boutons.js"></script>
+
+    <script></script>
+  </body>
+</html>

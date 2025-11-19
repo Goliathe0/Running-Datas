@@ -2,66 +2,62 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Main menu</title>
+    <title>Sport data</title>
     <link rel="stylesheet" href="style.css" />
     <!-- Charger Chart.js depuis un CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <header>
-      <h1>Main menu</h1>
+      <h1>Statistiques avancées</h1>
       <nav>
+        <button class="btn-mainMenu">Menu</button>
         <button class="btn-activities">Activités</button>
+        <!-- <a href="Activities.html" target="_blank">Activités</a> -->
+
         <button class="btn-records">Mur des records</button>
-        <button class="btn-stats">Statistiques avancées</button>
+
         <button class="btn-carte">Carte</button>
       </nav>
     </header>
     <section>
-      Ajouter des transitions ou des animations, 1. J'aimerais ajouter des
-      bouttons et des actions assciées : 2.si c'est l'allure inverser y: //dans
-      le scatter chart tracer un courbe
+      ici tu peux mettre les prochaines tâches à réaliser : inverser vitesse et
+      allure selon le sport 2.changer la couleur selon le sport 3. ajouter les
+      fleches pour changer de période. Si all-time alors ne pas mettre la
+      période ou jusqu'au "date du jour" mieux visualiser la période
     </section>
-
     <div class="filters">
       <button class="filter-btn" data-period="all">All time</button>
       <button class="filter-btn" data-period="year">1 an</button>
       <button class="filter-btn" data-period="6months">6 mois</button>
-      <button class="filter-btn" data-period="1month">1 mois</button>
-      <button class="filter-btn" data-period="1week">1 semaine</button>
+      <button class="filter-btn" data-period="3months">3 mois</button>
     </div>
 
     <div class="sports">
-      <button class="chart-button" data-sport="All">Tous les sports</button>
       <button class="chart-button" data-sport="Running">Course à pied</button>
       <button class="chart-button" data-sport="Biking">Cyclisme</button>
       <button class="chart-button" data-sport="Swimming">Natation</button>
     </div>
     <p id="dateRange">Période :</p>
-    <canvas id="monBarChart" width="100" height="50"></canvas>
 
-    <canvas id="monFromage" width="100" height="50"></canvas>
-
+    <canvas id="monNuage" width="400" height="200"></canvas>
     <p class="dataTitle">Nombre d'activités</p>
     <p id="nbActivitiesFiltered"></p>
-    <p class="dataTitle">Distance totale (km)</p>
+    <p class="dataTitle">Distance totale</p>
     <p id="distanceTotaleFiltered"></p>
     <p class="dataTitle">Distance moyenne</p>
     <p id="distanceMoyenneFiltered"></p>
-    <p class="dataTitle">Temps total</p>
-    <p id="tempsTotalFiltered"></p>
-    <p class="dataTitle">Dénivelé positif total (m)</p>
-    <p id="denivelePFiltered"></p>
+    <p class="dataTitle">Vitesse moyenne</p>
+    <p id="avgSpeedFiltered"></p>
 
     <!-- Inclure les fichiers JavaScript -->
-    <script src="../src/pages/MainMenu.js"></script>
+
+    <script src="../src/pages/AdvancedStats.js"></script>
+    <script src="../src/api/loadFile.js"></script>
     <script src="../src/utils/fillCharts.js"></script>
     <script src="../src/utils/format.js"></script>
     <script src="../src/utils/math.js"></script>
     <script src="../src/utils/filters.js"></script>
     <script src="../src/utils/boutons.js"></script>
-    <script src="../src/api/loadFile.js"></script>
-
-    <script></script>
   </body>
 </html>

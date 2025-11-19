@@ -1,0 +1,129 @@
+let data_scatter = [];
+let scatterChart = null; // Variable globale pour stocker le graphique
+
+let vitesseChart = null; // Variable globale pour stocker l'instance du graphique
+
+// Fonction pour le graphique de vitesse/fréquence cardiaque
+
+function toggleDataset(chartId, datasetIndex) {
+  console.log("chartId:", chartId);
+  console.log("Tentative de toggle du dataset index :", datasetIndex);
+  /*const chart = window[`${chartId}Chart`]; // Récupère l'instance du graphique
+  if (!chart) {
+    console.log("Aucun graphique trouvé.");
+    return;
+  }*/
+  if (!window.vitesseChart) {
+    console.log("Aucun graphique trouvé.");
+    return;
+  }
+  //const dataset = chart.data.datasets[datasetIndex];
+  const dataset = window.vitesseChart.data.datasets[datasetIndex];
+  if (!dataset) {
+    console.log("Aucun dataset trouvé à l'index :", datasetIndex);
+    return;
+  }
+
+  console.log("Dataset trouvé :", dataset.label);
+  // Récupère les métadonnées du dataset
+
+  //const meta = chart.getDatasetMeta(datasetIndex);
+  const meta = window.vitesseChart.getDatasetMeta(datasetIndex);
+  console.log("Meta avant toggle :", meta.hidden);
+
+  // Inverse la visibilité du dataset
+  meta.hidden = !meta.hidden;
+  console.log("Meta après toggle :", meta.hidden);
+  //meta.hidden = meta.hidden === null ? !dataset.hidden : null;
+
+  // Met à jour le graphique
+  //chart.update();
+  window.vitesseChart.update();
+}
+
+function updateScatterChart(data_Scatter) {
+  const ctx = document.getElementById("monNuage");
+  // Création du graphique en nuage de points
+  if (!ctx) return;
+  // Détruit le graphique existant s'il y en a un
+  if (scatterChart) {
+    scatterChart.destroy();
+  }
+  scatterChart = new Chart(ctx, {
+    type: "scatter",
+    data: {
+      datasets: [
+        {
+          label: "Vitesse en fonction de la distance",
+          data: data_Scatter,
+          borderColor: "blue",
+          backgroundColor: "rgba(0, 0, 255, 0.5)",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: { title: { display: true, text: "Vitesse (m/s)" } },
+        x: {
+          title: { display: true, text: "Distance (m)" },
+        },
+      },
+    },
+  });
+}
+
+function filterTable(sport) {
+  const rows = document.querySelectorAll("table tbody tr");
+  rows.forEach((row) => {
+    const sportCell = row.cells[0];
+    if (sport === "All" || sportCell.textContent === sport) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+
+  // Filtre les données du graphique
+  const filteredData = data_scatter.filter(
+    (data) => sport === "All" || data.sport === sport
+  );
+  console.log("sport : ", sport, "filteredData : ", filteredData);
+  updateScatterChart(filteredData);
+}
+
+// Fonction pour le graphique de nuage de points
+async function ReadData(file) {
+  try {
+    const response = await fetch(file);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+
+    // Calcul de la distance totale et de la vitesse moyenne
+    let total_distance = 0;
+    let all_total_time = 0;
+    for (let i = 0; i < data.laps.length; i++) {
+      total_distance += data.laps[i].distance / 1000;
+      all_total_time += data.laps[i].total_time;
+    }
+
+    // Calcul de la vitesse moyenne
+    const average_speed = calculateSpeedOrPace(
+      data.sport,
+      total_distance,
+      all_total_time,
+      "int"
+    );
+
+    // Retourne une paire {x: distance, y: vitesse} avec le type de sport
+    return {
+      x: total_distance,
+      y: average_speed,
+      sport: data.sport,
+    };
+  } catch (error) {
+    console.error("Erreur dans ReadData :", error);
+    return null;
+  }
+}

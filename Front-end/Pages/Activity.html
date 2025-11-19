@@ -2,13 +2,24 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Activités sportives</title>
+    <title>Activité</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
     <!-- Charger Chart.js depuis un CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <h1>Mes Activités</h1>
+    <nav>
+      <button class="btn-mainMenu">Main menu</button>
+      <button class="btn-activities">Activités</button>
+      <button class="btn-records">Mur des records</button>
+      <button class="btn-stats">Statistiques avancées</button>
+    </nav>
+    <header></header>
+
     <div class="tabs">
       <button class="tab-button" onclick="openTab(event, 'Running')">
         Course à pied
@@ -19,6 +30,26 @@
       <button class="tab-button" onclick="openTab(event, 'Swimming')">
         Natation
       </button>
+    </div>
+    <table id="laps-table">
+      <thead>
+        <tr>
+          <th>distance (m)</th>
+          <th>temps</th>
+          <th>allure/vitesse (m/s / km/h)</th>
+          <th>Dénivelé (m)</th>
+          <th>BPM (moy / max)</th>
+          <th>Dénivelé posititif</th>
+          <th>Dénivelé négatif</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Le JavaScript remplira ici -->
+      </tbody>
+    </table>
+
+    <div id="map-container">
+      <div id="map"></div>
     </div>
     <canvas id="monAltitude" width="400" height="200"></canvas>
     <canvas id="maVitesse" width="400" height="200"></canvas>
@@ -50,27 +81,15 @@
       </button>
     </div>
 
-    //Ajouter tableau circuits; temps;distance;allure moyenne
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <!-- Tes autres scripts (si nécessaire) -->
-    <script src="fonctions.js"></script>
-    <script src="fillTable.js"></script>
-    <script>
-      // Récupère le nom du fichier sélectionné
-      const selectedFile = localStorage.getItem("selectedActivityFile");
-      console.log(
-        "localstorage :",
-        localStorage.getItem("selectedActivityFile")
-      );
-      if (selectedFile) {
-        console.log("Fichier sélectionné :", selectedFile);
-        // Utilise ce fichier pour mettre à jour les graphiques
-
-        fillAltitudeChart(selectedFile);
-        fillSpeedHrChart(selectedFile);
-      } else {
-        console.warn("Aucun fichier sélectionné.");
-      }
-    </script>
+    <script src="../src/utils/format.js"></script>
+    <script src="../src/utils/fillcharts.js"></script>
+    <script src="../src/utils/fillText.js"></script>
+    <script src="../src/pages/Activity.js"></script>
+    <script src="../src/utils/boutons.js"></script>
+    <script src="../src/utils/map.js"></script>
+    <script></script>
   </body>
 </html>
