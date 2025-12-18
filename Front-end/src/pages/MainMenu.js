@@ -15,7 +15,7 @@ async function initMainMenuPage() {
   /*window.dataActivities = await loadData_indexFile(index_file);
   console.log("dataActivities", window.dataActivities);*/
 
-  setupFilters();
+  setupButtons();
   highlightActiveButtons();
   // ✅ Appel initial pour afficher les stats dès le chargement
   if (!window.selectedPeriod) window.selectedPeriod = "all";

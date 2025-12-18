@@ -20,36 +20,29 @@
     </nav>
     <header></header>
 
-    <div class="tabs">
-      <button class="tab-button" onclick="openTab(event, 'Running')">
-        Course à pied
-      </button>
-      <button class="tab-button" onclick="openTab(event, 'Cycling')">
-        Cyclisme
-      </button>
-      <button class="tab-button" onclick="openTab(event, 'Swimming')">
-        Natation
-      </button>
+    <div class="laps">
+      <button class="laps-btn" data-mode="auto">Laps auto</button>
+      <button class="laps-btn" data-mode="manual">Laps manuels</button>
     </div>
-    <table id="laps-table">
-      <thead>
-        <tr>
-          <th>distance (m)</th>
-          <th>temps</th>
-          <th>allure/vitesse (m/s / km/h)</th>
-          <th>Dénivelé (m)</th>
-          <th>BPM (moy / max)</th>
-          <th>Dénivelé posititif</th>
-          <th>Dénivelé négatif</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Le JavaScript remplira ici -->
-      </tbody>
-    </table>
+    <div class="page-layout">
+      <table id="laps-table">
+        <thead>
+          <tr>
+            <th>distance <small>(m)</small></th>
+            <th>temps <small>(s)</small></th>
+            <th>allure/vitesse <small>(m/s / km/h)</small></th>
+            <th>BPM <small>(moy / max)</small></th>
+            <th>dénivelé <small>(m) (D+ / D-)</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Le JavaScript remplira ici -->
+        </tbody>
+      </table>
 
-    <div id="map-container">
-      <div id="map"></div>
+      <div id="map-container" class="layout-activity">
+        <div id="map"></div>
+      </div>
     </div>
     <canvas id="monAltitude" width="400" height="200"></canvas>
     <canvas id="maVitesse" width="400" height="200"></canvas>
@@ -80,16 +73,31 @@
         oscillation verticale
       </button>
     </div>
+    <table id="records-table">
+      <thead>
+        <tr>
+          <th>distance <small>(m)</small></th>
+          <th>temps</th>
+          <th>allure/vitesse <small>(m/s / km/h)</small></th>
+          <th>BPM <small>(moy / max)</small></th>
+          <th>dénivelé <small>(m) (D+ / D-)</small></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Le JavaScript remplira ici -->
+      </tbody>
+    </table>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <!-- Tes autres scripts (si nécessaire) -->
     <script src="../src/utils/format.js"></script>
+    <script src="../src/utils/fillTable.js"></script>
     <script src="../src/utils/fillcharts.js"></script>
     <script src="../src/utils/fillText.js"></script>
     <script src="../src/pages/Activity.js"></script>
     <script src="../src/utils/boutons.js"></script>
-    <script src="../src/utils/map.js"></script>
+    <script src="../src/utils/fillMap.js"></script>
     <script></script>
   </body>
 </html>

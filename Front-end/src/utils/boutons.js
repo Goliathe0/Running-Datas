@@ -1,13 +1,47 @@
+function setupButtons() {
+  setupPeriodButton();
+  setupSportButton();
+  setupLapsModeButton();
+}
+
 // -------------------
-// Gestion des filtres
+// Gestion des filtres d'activités
 // -------------------
-function setupFiltersButtons() {
-  const filtersButtons = document.querySelectorAll(".chart-button");
-  filtersButtons.forEach((btn) => {
+
+function setupPeriodButton() {
+  const periodButtons = document.querySelectorAll(".filter-btn");
+  periodButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
-      selectedSport = btn.dataset.sport;
+      window.selectedPeriod = btn.dataset.period;
       highlightActiveButtons();
-      updateFilteredChart();
+      updateFilteredActivities();
+    });
+  });
+}
+
+function setupSportButton() {
+  const sportButtons = document.querySelectorAll(".chart-button");
+  sportButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      window.selectedSport = btn.dataset.sport;
+      highlightActiveButtons();
+      updateFilteredActivities();
+    });
+  });
+}
+
+// -------------------
+// Gestion des choix de mode
+// -------------------
+
+function setupLapsModeButton() {
+  const modeButtons = document.querySelectorAll(".laps-btn");
+  modeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      window.selectedMode = btn.dataset.mode;
+      highlightActiveButtons();
+      //l'action quand on clique sur le bouton :
+      fillActivityTable(window.selectedFile, window.selectedMode);
     });
   });
 }
@@ -18,7 +52,7 @@ function setupFiltersButtons() {
 function highlightActiveButtons() {
   // Boutons de sport
   document.querySelectorAll(".chart-button").forEach((btn) => {
-    if (btn.dataset.sport === selectedSport) {
+    if (btn.dataset.sport === window.selectedSport) {
       btn.classList.add("active");
     } else {
       btn.classList.remove("active");
@@ -27,7 +61,16 @@ function highlightActiveButtons() {
 
   // Boutons de période
   document.querySelectorAll(".filter-btn").forEach((btn) => {
-    if (btn.dataset.period === selectedPeriod) {
+    if (btn.dataset.period === window.selectedPeriod) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+
+  // Boutons de mode pour laps
+  document.querySelectorAll(".laps-btn").forEach((btn) => {
+    if (btn.dataset.mode === window.selectedMode) {
       btn.classList.add("active");
     } else {
       btn.classList.remove("active");

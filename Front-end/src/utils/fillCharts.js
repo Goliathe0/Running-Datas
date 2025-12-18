@@ -164,6 +164,7 @@ async function fillBarChart(activities) {
       data: { labels: periods, datasets },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           x: { stacked: true },
           y: {
@@ -243,6 +244,7 @@ async function fillPieChart(activities) {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             position: "bottom",

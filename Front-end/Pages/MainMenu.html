@@ -8,60 +8,85 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <header>
-      <h1>Main menu</h1>
-      <nav>
+    <header class="main-nav">
+      <div class="nav-left">
+        <a
+          class="logo"
+          href="http://127.0.0.1:5500/SportsData/Front-end/Pages/MainMenu.html"
+          title="nom du site main menu"
+        >
+          <img src="../icons/Aoraki-01.svg" />
+        </a>
+      </div>
+      <div class="nav-middle">
+        <h1>Main menu</h1>
+      </div>
+      <nav class="nav-right">
         <button class="btn-activities">Activités</button>
         <button class="btn-records">Mur des records</button>
         <button class="btn-stats">Statistiques avancées</button>
         <button class="btn-carte">Carte</button>
       </nav>
     </header>
-    <section>
-      Ajouter des transitions ou des animations, 1. J'aimerais ajouter des
-      bouttons et des actions assciées : 2.si c'est l'allure inverser y: //dans
-      le scatter chart tracer un courbe
-    </section>
 
-    <div class="filters">
-      <button class="filter-btn" data-period="all">All time</button>
-      <button class="filter-btn" data-period="year">1 an</button>
-      <button class="filter-btn" data-period="6months">6 mois</button>
-      <button class="filter-btn" data-period="1month">1 mois</button>
-      <button class="filter-btn" data-period="1week">1 semaine</button>
-    </div>
+    <main class="main-container"> 
+      <section class="main-content">
+        <header class="section-header">
+          Ajouter des transitions ou des animations, 1. J'aimerais ajouter des
+          bouttons et des actions assciées : 2.si c'est l'allure inverser y: //dans
+          le scatter chart tracer un courbe. x.
+        </header>
+     
+        <div class="filters">
+          <button class="filter-btn" data-period="all">All time</button>
+          <button class="filter-btn" data-period="year">1 an</button>
+          <button class="filter-btn" data-period="6months">6 mois</button>
+          <button class="filter-btn" data-period="1month">1 mois</button>
+          <button class="filter-btn" data-period="1week">1 semaine</button>
+        </div>
 
-    <div class="sports">
-      <button class="chart-button" data-sport="All">Tous les sports</button>
-      <button class="chart-button" data-sport="Running">Course à pied</button>
-      <button class="chart-button" data-sport="Biking">Cyclisme</button>
-      <button class="chart-button" data-sport="Swimming">Natation</button>
-    </div>
-    <p id="dateRange">Période :</p>
-    <canvas id="monBarChart" width="100" height="50"></canvas>
+        <div class="sports">
+          <button class="chart-button" data-sport="All">Tous les sports</button>
+          <button class="chart-button" data-sport="Running">Course à pied</button>
+          <button class="chart-button" data-sport="Biking">Cyclisme</button>
+          <button class="chart-button" data-sport="Swimming">Natation</button>
+        </div>
+        <p id="dateRange">Période :</p>
+        <div class="page-layout">
+          <div class="chart chart-bar">
+            <canvas id="monBarChart"></canvas>
+          </div>
+          <div class="chart chart-pie">
+            <canvas id="monFromage"></canvas>
+          </div>
+        </div>
 
-    <canvas id="monFromage" width="100" height="50"></canvas>
+        
+        <p class="dataTitle">Nombre d'activités</p>
+        <p id="nbActivitiesFiltered"></p>
+        <p class="dataTitle">Distance totale (km)</p>
+        <p id="distanceTotaleFiltered"></p>
+        <p class="dataTitle">Distance moyenne</p>
+        <p id="distanceMoyenneFiltered"></p>
+        <p class="dataTitle">Temps total</p>
+        <p id="tempsTotalFiltered"></p>
+        <p class="dataTitle">Dénivelé positif total (m)</p>
+        <p id="denivelePFiltered"></p>
+      </section>
 
-    <p class="dataTitle">Nombre d'activités</p>
-    <p id="nbActivitiesFiltered"></p>
-    <p class="dataTitle">Distance totale (km)</p>
-    <p id="distanceTotaleFiltered"></p>
-    <p class="dataTitle">Distance moyenne</p>
-    <p id="distanceMoyenneFiltered"></p>
-    <p class="dataTitle">Temps total</p>
-    <p id="tempsTotalFiltered"></p>
-    <p class="dataTitle">Dénivelé positif total (m)</p>
-    <p id="denivelePFiltered"></p>
+      <aside class="side-nav">
 
-    <!-- Inclure les fichiers JavaScript -->
-    <script src="../src/pages/MainMenu.js"></script>
-    <script src="../src/utils/fillCharts.js"></script>
-    <script src="../src/utils/format.js"></script>
-    <script src="../src/utils/math.js"></script>
-    <script src="../src/utils/filters.js"></script>
-    <script src="../src/utils/boutons.js"></script>
-    <script src="../src/api/loadFile.js"></script>
+</aside>
+      <!-- Inclure les fichiers JavaScript -->
+      <script src="../src/pages/MainMenu.js"></script>
+      <script src="../src/utils/fillCharts.js"></script>
+      <script src="../src/utils/fillText.js"></script>
+      <script src="../src/utils/format.js"></script>
+      <script src="../src/utils/math.js"></script>
+      <script src="../src/utils/filters.js"></script>
+      <script src="../src/utils/boutons.js"></script>
+      <script src="../src/api/loadFile.js"></script>
 
-    <script></script>
+      <script></script>
   </body>
 </html>

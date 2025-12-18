@@ -18,7 +18,7 @@ function formatTime(totalSeconds) {
 }
 
 // Fonction pour calculer la vitesse ou l'allure en fonction du type d'activité  VALIDE
-function calculateSpeedOrPace(type, totalDistance, totalDuration, format) {
+function calculateSpeedOrPace(sport, totalDistance, totalDuration, format) {
   if (totalDistance <= 0 || totalDuration <= 0) {
     if (format == "string") {
       return "0 km/h"; // Retourner une valeur par défaut si la distance ou la durée est nulle
@@ -27,7 +27,7 @@ function calculateSpeedOrPace(type, totalDistance, totalDuration, format) {
     }
   }
 
-  if (type === "Running") {
+  if (sport === "Running") {
     // Calculer l'allure en min/km pour la course à pied
 
     const pacePerKm = totalDuration / totalDistance; // Temps en secondes par km
@@ -39,7 +39,7 @@ function calculateSpeedOrPace(type, totalDistance, totalDuration, format) {
     if (format == "string") {
       return `${totalMinutesPerKm.toFixed(2)} min/km`;
     } else if (format == "int") {
-      return totalMinutesPerKm; // Retourner une valeur par défaut si la distance ou la durée est nulle
+      return totalMinutesPerKm.toFixed(2); // Retourner une valeur par défaut si la distance ou la durée est nulle
     }
   } else {
     // Calculer la vitesse en km/h pour les autres activités

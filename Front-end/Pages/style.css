@@ -1,16 +1,78 @@
 /* style.css */
-
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin: 0px;
+}
+
+/* ========== main-nav ========== */
+.main-nav {
+  position: fixed; /* reste en haut */
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 10px;
+  background-color: #6e6eff;
+  color: rgb(0, 0, 0);
+}
+
+.nav-left {
+  margin: 2px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 6px;
+  background-color: #9099fa;
+}
+.nav-middle {
+  display: flex;
+  margin: 2px;
+  color: rgba(240, 240, 255, 1);
 }
 
 h1 {
   text-align: center;
-  color: #333;
+  margin: 2px;
+  color: rgba(240, 240, 255, 1);
 }
 
-#laps-table,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+  cursor: pointer;
+}
+
+.btn-carte,
+.btn-stats,
+.btn-records,
+.btn-activities {
+  height: 30px;
+  color: rgba(240, 240, 255, 1);
+  border-radius: 6px;
+  border-color: #ffffff00;
+  background-color: #9099fa;
+  cursor: pointer;
+}
+
 #activity-table,
 #statistics-table,
 #running-records-table,
@@ -21,8 +83,6 @@ h1 {
   margin-top: 20px;
 }
 
-#laps-table th,
-#laps-table td,
 #activity-table th,
 #activity-table td,
 #statistics-table th,
@@ -38,6 +98,7 @@ h1 {
   text-align: left;
 }
 
+#records-table th,
 #laps-table th,
 #activity-table th,
 #statistics-table th,
@@ -48,6 +109,7 @@ h1 {
   font-weight: bold;
 }
 
+#records-table,
 #laps-table,
 tr:nth-child(even) #activity-table tr:nth-child(even),
 #statistics-table tr:nth-child(even),
@@ -57,6 +119,7 @@ tr:nth-child(even) #activity-table tr:nth-child(even),
   background-color: #f9f9f9;
 }
 
+#records-table tr:hover,
 #laps-table tr:hover,
 #activity-table tr:hover,
 #statistics-table tr:hover,
@@ -66,10 +129,12 @@ tr:nth-child(even) #activity-table tr:nth-child(even),
   background-color: #f1f1f1;
 }
 
+.laps,
 .filters {
   margin-top: 20px;
 }
 
+.laps select,
 .filters select {
   margin-right: 10px;
   padding: 5px;
@@ -126,7 +191,7 @@ tr:nth-child(even) #activity-table tr:nth-child(even),
   cursor: pointer;
   z-index: 1001;
 }
-
+.laps-btn,
 .chart-button,
 .filter-btn {
   padding: 8px 14px;
@@ -138,11 +203,13 @@ tr:nth-child(even) #activity-table tr:nth-child(even),
   margin: 3px;
 }
 
+.laps-btn:hover,
 .chart-button:hover,
 .filter-btn:hover {
   background: #eaeaea;
 }
 
+.laps-btn.active,
 .chart-button.active,
 .filter-btn.active {
   background-color: #007bff;
@@ -150,12 +217,131 @@ tr:nth-child(even) #activity-table tr:nth-child(even),
   border-color: #007bff;
 }
 
-#map-container {
+/* Conteneur global pour placer les deux blocs côte à côte */
+.page-layout {
+  border: 2px solid #4d258e;
+  display: flex;
+  align-items: stretch;
+  flex-direction: row;
   width: 100%;
-  height: 400px;
+  max-height: 35vh; /* clé */
+  aspect-ratio: 29/ 9;
+  gap: 10px;
 }
 
-#map {
+/* Tableau à gauche (1 part) */
+#records-table,
+#laps-table {
+  width: 100%;
+  flex: 1; /* Tableau = 1 part */
+  height: 100%;
+  overflow-y: auto; /* Si besoin de scroll */
+  border-collapse: collapse;
+}
+
+#records-table th,
+#records-table td,
+#laps-table th,
+#laps-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+#records-table thead,
+#laps-table thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+/* ========== LAYOUT ACTIVITY.HTML ========== */
+.layout-activity {
+  flex: 2;
+  width: 50%;
+  height: 100%;
+}
+
+.layout-activity #map {
   width: 100%;
   height: 100%;
+}
+
+/* ========== LAYOUT MAP.HTML (pleine page) ========== */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.layout-fullmap {
+  width: 100%;
+  height: 100%;
+}
+
+.layout-fullmap #map {
+  width: 100%;
+  height: 100%;
+}
+
+.end-icon {
+  color: rgba(255, 169, 255, 1);
+}
+
+/* Centrer tout le tableau */
+#records-table th,
+#records-table td,
+#laps-table th,
+#laps-table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Style pour les unités (dans les en-têtes) */
+#records-table th small,
+#laps-table th small {
+  font-size: 0.75em; /* Plus petit */
+  color: #666; /* Moins foncé */
+  font-weight: normal; /* Enlever le gras */
+}
+
+.main-container {
+  display: flex;
+  margin-top: 68px;
+  width: 100%;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+}
+
+.side-nav {
+  flex: 1;
+  width: 25%;
+}
+
+.chart {
+  min-width: 0;
+  height: 100%;
+}
+
+.chart-bar {
+  flex: 1 1 auto;
+  min-width: 350px;
+}
+
+.chart-pie {
+  aspect-ratio: 1/1;
+  height: 100%;
+  min-height: 200px;
+  max-height: 400px;
+  flex: 0 0 auto;
+}
+
+.chart canvas {
+  height: 100%;
+  display: block;
 }
